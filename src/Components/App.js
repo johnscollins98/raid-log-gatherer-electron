@@ -27,12 +27,13 @@ function App() {
   };
 
   const date = new Date();
-  const isoString = date.toISOString();
-  const [dateString, timeString] = getDateAndTimeStrings(isoString);
+  const dateString = date.toISOString().substring(0, 10);
+  date.setDate(date.getDate() + 1);
+  const nextDateString = date.toISOString().substring(0, 10);
 
   const [startDate, setStartDate] = useState(dateString);
   const [startTime, setStartTime] = useState("00:00");
-  const [endDate, setEndDate] = useState(dateString);
+  const [endDate, setEndDate] = useState(nextDateString);
   const [endTime, setEndTime] = useState("00:00");
   const [startTimeEnabled, setStartTimeEnabled] = useState(false);
   const [endTimeEnabled, setEndTimeEnabled] = useState(false);
@@ -65,12 +66,7 @@ function App() {
     const getUserConfig = async () => {
       const data = await ipcRenderer.invoke("getUserConfig");
       if (data) {
-        setSelectedFolder(data.selectedFolder);
-        let [date, time] = getDateAndTimeStrings(data.fullStartTime);
-        setStartDate(date);
-
-        [date, time] = getDateAndTimeStrings(data.fullEndTime);
-        setEndDate(date);
+        if (data.selectedFolder) setSelectedFolder(data.selectedFolder);
       }
     };
     getUserConfig();

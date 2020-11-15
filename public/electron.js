@@ -65,7 +65,7 @@ ipcMain.handle("getUserConfig", async (event, args) => {
 
 ipcMain.handle("sendFileWithinTimes", async (event, args) => {
   try {
-    fs.writeFileSync(CONFIG_PATH, JSON.stringify(args));
+    fs.writeFileSync(CONFIG_PATH, JSON.stringify({selectedFolder: args.selectedFolder}));
     const arr = await recursiveSearch(event, args);
     return await Promise.all(arr);
   } catch (err) {
