@@ -119,9 +119,7 @@ function App() {
       setStatusMessage("Processing Files...")
       const res = await ipcRenderer.invoke("sendFileWithinTimes", data);
       if (res.error) {
-        console.log(res.error);
-        showToast("Error", res.message);
-        return;
+        throw res;
       }
 
       const numFailures = res.filter((o) => o === false).length
@@ -131,6 +129,7 @@ function App() {
       setStatusMessage(msg);
     } catch (err) {
       showToast("Error", err.message);
+      setStatusMessage(err.message);
     } finally {
       setProcessing(false);
     }
