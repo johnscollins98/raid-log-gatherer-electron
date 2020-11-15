@@ -21,10 +21,10 @@ function createWindow() {
     },
     icon: __dirname + "/icon.png",
   });
-  
+
   if (!isDev) {
     mainWindow.removeMenu();
-  };
+  }
 
   mainWindow.loadURL(
     isDev
@@ -66,7 +66,7 @@ ipcMain.handle("getUserConfig", async (event, args) => {
 ipcMain.handle("sendFileWithinTimes", async (event, args) => {
   fs.writeFileSync(CONFIG_PATH, JSON.stringify(args));
   const arr = await recursiveSearch(event, args);
-  await Promise.all(arr);
+  return await Promise.all(arr);
 });
 
 ipcMain.handle("openLink", (event, link) => {
@@ -97,9 +97,15 @@ const recursiveSearch = async (event, args) => {
         lastModified - args.fullEndTime < 0
       ) {
         matches.push(
-          sendToDPSReport(fullPath).then((res) =>
-            event.sender.send("addLink", res.data.permalink)
-          )
+          sendToDPSReport(fullPath)
+            .then((res) => {
+              event.sender.send("addLink", res.data.permalink);
+              return true;
+            })
+            .catch((err) => {
+              console.log(`Error on ${fullPath}. ${err.message}`);
+              return false;
+            })
         );
       }
     }

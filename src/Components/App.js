@@ -47,6 +47,7 @@ function App() {
 
   const [processing, setProcessing] = useState(false);
   const [logLinks, setLogLinks] = useState([]);
+  const [statusMessage, setStatusMessage] = useState("Idle")
 
   const [toastShowing, setToastShowing] = useState(false);
   const [toastHeader, setToastHeader] = useState("");
@@ -115,10 +116,15 @@ function App() {
       }
 
       const data = { selectedFolder, fullStartTime, fullEndTime };
-      await ipcRenderer.invoke("sendFileWithinTimes", data);
-      showToast("Success", "Successfully processed files.");
+      setStatusMessage("Processing Files...")
+      const res = await ipcRenderer.invoke("sendFileWithinTimes", data);
+      const numFailures = res.filter((o) => o === false).length
+      const numSuccess = res.length - numFailures;
+      const msg = `Completed with ${numSuccess} links. ${numFailures} failures.`;
+      showToast("Complete", msg);
+      setStatusMessage(msg);
     } catch (err) {
-      showToast("Error", err);
+      showToast("Error", err.message);
     } finally {
       setProcessing(false);
     }
@@ -276,6 +282,7 @@ function App() {
         </Row>
       </Form>
       <Links logLinks={logLinks} linkHandler={linkHandler} />
+      <div>Status: {statusMessage}</div>
       <Toast
         toastShowing={toastShowing}
         toastBody={toastBody}
