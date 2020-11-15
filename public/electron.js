@@ -64,9 +64,13 @@ ipcMain.handle("getUserConfig", async (event, args) => {
 });
 
 ipcMain.handle("sendFileWithinTimes", async (event, args) => {
-  fs.writeFileSync(CONFIG_PATH, JSON.stringify(args));
-  const arr = await recursiveSearch(event, args);
-  return await Promise.all(arr);
+  try {
+    fs.writeFileSync(CONFIG_PATH, JSON.stringify(args));
+    const arr = await recursiveSearch(event, args);
+    return await Promise.all(arr);
+  } catch (err) {
+    return { error: err, message: "There was en error trying to process your files. Check your log directory is correct." }
+  }
 });
 
 ipcMain.handle("openLink", (event, link) => {

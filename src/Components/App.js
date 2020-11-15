@@ -58,7 +58,7 @@ function App() {
     setToastBody(body);
     setToastShowing(true);
 
-    setTimeout(() => setToastShowing(false), 1000);
+    setTimeout(() => setToastShowing(false), 2000);
   };
 
   useEffect(() => {
@@ -118,6 +118,12 @@ function App() {
       const data = { selectedFolder, fullStartTime, fullEndTime };
       setStatusMessage("Processing Files...")
       const res = await ipcRenderer.invoke("sendFileWithinTimes", data);
+      if (res.error) {
+        console.log(res.error);
+        showToast("Error", res.message);
+        return;
+      }
+
       const numFailures = res.filter((o) => o === false).length
       const numSuccess = res.length - numFailures;
       const msg = `Completed with ${numSuccess} links. ${numFailures} failures.`;
