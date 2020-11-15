@@ -23,7 +23,7 @@
     "reactstrap": "^8.7.1"
   },
   "scripts": {
-    "react-start": "react-scripts start",
+    "react-start": "cross-env PORT=3000 react-scripts start",
     "react-build": "react-scripts build",
     "react-eject": "react-scripts eject",
     "electron-build": "electron-builder",
