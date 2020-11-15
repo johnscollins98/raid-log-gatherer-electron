@@ -1,37 +1,35 @@
 {
   "name": "raid-log-gatherer",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "description": "Tool for gathering GW2 raid logs",
   "author": "John Collins",
   "main": "public/electron.js",
   "homepage": ".",
+  "build": {
+    "productName": "Raid Log Gatherer",
+    "win": {
+      "icon":"public/icon.png"
+    }
+  },
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
+    "axios": "^0.21.0",
+    "bootstrap": "^4.5.3",
     "cross-env": "^7.0.2",
     "electron-is-dev": "^1.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.0",
-    "web-vitals": "^0.2.4"
+    "reactstrap": "^8.7.1"
   },
   "scripts": {
     "react-start": "react-scripts start",
     "react-build": "react-scripts build",
-    "react-test": "react-scripts test",
     "react-eject": "react-scripts eject",
     "electron-build": "electron-builder",
     "release": "yarn react-build && electron-builder --publish=always",
     "build": "yarn react-build && yarn electron-build",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:3000 && electron .\""
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [

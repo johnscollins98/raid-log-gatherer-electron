@@ -1,0 +1,15 @@
+.App {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+}
+
+.links {
+  flex-grow: 1;
+  overflow: auto;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+}
