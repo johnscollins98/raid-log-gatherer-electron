@@ -21,7 +21,11 @@ function createWindow() {
     },
     icon: __dirname + "/icon.png",
   });
-  mainWindow.removeMenu();
+  
+  if (!isDev) {
+    mainWindow.removeMenu();
+  };
+
   mainWindow.loadURL(
     isDev
       ? "http://localhost:3000"
