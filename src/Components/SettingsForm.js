@@ -17,7 +17,7 @@ const SettingsForm = ({
   setLogLinks,
   setStatusMessage,
   ipcRenderer,
-  showToast
+  showToast,
 }) => {
   useEffect(() => {
     const getUserConfig = async () => {
@@ -144,7 +144,7 @@ const SettingsForm = ({
           <FormGroup>
             <InputGroup>
               <InputGroupAddon addonType="prepend">
-                <InputGroupText>
+                <InputGroupText style={{ alignItems: "baseline" }}>
                   <Input
                     addon
                     type="checkbox"
@@ -197,7 +197,7 @@ const SettingsForm = ({
           <FormGroup>
             <InputGroup>
               <InputGroupAddon addonType="prepend">
-                <InputGroupText>
+                <InputGroupText style={{ alignItems: "baseline" }}>
                   <Input
                     addon
                     type="checkbox"
