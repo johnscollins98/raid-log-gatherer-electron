@@ -11,6 +11,7 @@ import {
   Spinner,
 } from "reactstrap";
 import DateInput from "./Form/DateInput";
+import TimeInput from "./Form/TimeInput";
 import { useEffect, useState } from "react";
 
 const SettingsForm = ({
@@ -39,16 +40,6 @@ const SettingsForm = ({
   const [startTime, setStartTime] = useState("00:00");
   const [endDate, setEndDate] = useState(nextDateString);
   const [endTime, setEndTime] = useState("00:00");
-  const [startTimeEnabled, setStartTimeEnabled] = useState(false);
-  const [endTimeEnabled, setEndTimeEnabled] = useState(false);
-
-  const handleTimeEnabled = (flag, setFlag, setTime) => {
-    setFlag(flag);
-
-    if (!flag) {
-      setTime("00:00");
-    }
-  };
 
   const [selectedFolder, setSelectedFolder] = useState("");
   const [processing, setProcessing] = useState(false);
@@ -136,36 +127,12 @@ const SettingsForm = ({
         </Col>
         <Col md={6}>
           <FormGroup>
-            <InputGroup>
-              <InputGroupAddon addonType="prepend">
-                <InputGroupText style={{ alignItems: "baseline" }}>
-                  <Input
-                    addon
-                    type="checkbox"
-                    aria-label="Checkbox for following text input"
-                    checked={startTimeEnabled}
-                    onChange={(e) =>
-                      handleTimeEnabled(
-                        e.target.checked,
-                        setStartTimeEnabled,
-                        setStartTime
-                      )
-                    }
-                    style={{ marginRight: "5px" }}
-                  />
-                  Raid Start Time
-                </InputGroupText>
-              </InputGroupAddon>
-              <Input
-                type="time"
-                name="startTime"
-                id="startTime"
-                placeholder="time placeholder"
-                value={startTime}
-                disabled={!startTimeEnabled}
-                onChange={(e) => setStartTime(e.target.value)}
-              />
-            </InputGroup>
+            <TimeInput
+              time={startTime}
+              setTime={setStartTime}
+              id="startTime"
+              label="Raid Start Time"
+            />
           </FormGroup>
         </Col>
       </Row>
@@ -182,36 +149,12 @@ const SettingsForm = ({
         </Col>
         <Col md={6}>
           <FormGroup>
-            <InputGroup>
-              <InputGroupAddon addonType="prepend">
-                <InputGroupText style={{ alignItems: "baseline" }}>
-                  <Input
-                    addon
-                    type="checkbox"
-                    aria-label="Checkbox for following text input"
-                    checked={endTimeEnabled}
-                    onChange={(e) =>
-                      handleTimeEnabled(
-                        e.target.checked,
-                        setEndTimeEnabled,
-                        setEndTime
-                      )
-                    }
-                    style={{ marginRight: "5px" }}
-                  />
-                  Raid End Time
-                </InputGroupText>
-              </InputGroupAddon>
-              <Input
-                type="time"
-                name="startTime"
-                id="startTime"
-                placeholder="time placeholder"
-                disabled={!endTimeEnabled}
-                value={endTime}
-                onChange={(e) => setEndTime(e.target.value)}
-              />
-            </InputGroup>
+            <TimeInput
+              time={endTime}
+              setTime={setEndTime}
+              id="endTime"
+              label="Raid End Time"
+            />
           </FormGroup>
         </Col>
       </Row>
