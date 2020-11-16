@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import SettingsForm from "./SettingsForm";
+import SettingsForm from "./Form/SettingsForm";
 import Toast from "./Toast";
 import Links from "./Links";
 const { ipcRenderer } = window.require("electron");

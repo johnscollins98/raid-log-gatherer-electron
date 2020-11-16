@@ -10,8 +10,8 @@ import {
   Col,
   Spinner,
 } from "reactstrap";
-import DateInput from "./Form/DateInput";
-import TimeInput from "./Form/TimeInput";
+import DateInput from "./DateInput";
+import TimeInput from "./TimeInput";
 import { useEffect, useState } from "react";
 
 const SettingsForm = ({
