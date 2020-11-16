@@ -10,6 +10,7 @@ import {
   Col,
   Spinner,
 } from "reactstrap";
+import DateInput from "./Form/DateInput";
 import { useEffect, useState } from "react";
 
 const SettingsForm = ({
@@ -125,19 +126,12 @@ const SettingsForm = ({
       <Row form>
         <Col md={6}>
           <FormGroup>
-            <InputGroup>
-              <InputGroupAddon addonType="prepend">
-                <InputGroupText>Raid Start Date</InputGroupText>
-              </InputGroupAddon>
-              <Input
-                type="date"
-                name="startDate"
-                id="startDate"
-                placeholder="date placeholder"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-              />
-            </InputGroup>
+            <DateInput
+              id="startDate"
+              date={startDate}
+              setDate={setStartDate}
+              label="Raid Start Date"
+            />
           </FormGroup>
         </Col>
         <Col md={6}>
@@ -178,19 +172,12 @@ const SettingsForm = ({
       <Row form>
         <Col md={6}>
           <FormGroup>
-            <InputGroup>
-              <InputGroupAddon addonType="prepend">
-                <InputGroupText>Raid End Date</InputGroupText>
-              </InputGroupAddon>
-              <Input
-                type="date"
-                name="startDate"
-                id="startDate"
-                placeholder="date placeholder"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-              />
-            </InputGroup>
+            <DateInput
+              id="endDate"
+              date={endDate}
+              setDate={setEndDate}
+              label="Raid End Date"
+            />
           </FormGroup>
         </Col>
         <Col md={6}>
