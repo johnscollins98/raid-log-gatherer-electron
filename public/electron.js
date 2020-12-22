@@ -57,6 +57,17 @@ ipcMain.handle("getDirectorySelection", async (event, args) => {
 const homedir = os.homedir();
 const CONFIG_PATH = path.join(homedir, ".raid-gatherer-config.json");
 
+ipcMain.handle("getBossNames", async (event, args) => {
+  const directory = args.selectedFolder;
+  const children = await fs.promises.readdir(directory, {
+    withFileTypes: true,
+  });
+  
+  return children
+    .filter(c => c.isDirectory())
+    .map(c => c.name);
+})
+
 ipcMain.handle("getUserConfig", async (event, args) => {
   if (!fs.existsSync(CONFIG_PATH)) return {};
   const data = fs.readFileSync(CONFIG_PATH);
@@ -78,15 +89,13 @@ ipcMain.handle("openLink", (event, link) => {
 });
 
 const recursiveSearch = async (event, args) => {
-  const directory = args.selectedFolder;
-  const children = await fs.promises.readdir(directory, {
+  const { selectedFolder, foldersToUse } = args; 
+  const children = await fs.promises.readdir(selectedFolder, {
     withFileTypes: true,
   });
   let matches = [];
   for (const child of children) {
-    if (isNotARaid(child.name)) continue;
-
-    const fullPath = path.join(directory, child.name);
+    const fullPath = path.join(selectedFolder, child.name);
     if (child.isDirectory()) {
       const arr = await recursiveSearch(event, {
         ...args,
@@ -94,6 +103,7 @@ const recursiveSearch = async (event, args) => {
       });
       matches = matches.concat(arr);
     } else {
+      if (!foldersToUse.some(f => fullPath.includes(f))) continue;
       const stat = await fs.promises.stat(fullPath);
       const lastModified = new Date(stat.mtime);
       if (
@@ -129,17 +139,4 @@ const sendToDPSReport = async (fullPath) => {
       "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
     },
   });
-};
-
-const isNotARaid = (name) => {
-  return (
-    [
-      "Arkk",
-      "Artsariiv",
-      "MAMA",
-      "Nightmare Oratuss",
-      "Skorvald the Shattered",
-      "Ensolyss of the Endless Torment",
-    ].includes(name) || name.includes("Kitty Golem")
-  );
 };
