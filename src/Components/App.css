@@ -18,3 +18,10 @@
   max-height: 50vh;
   overflow: auto;
 }
+
+.category-label {
+  margin-top: 0.25em;
+  margin-right: 0.25em;
+  margin-bottom: 0em;
+  font-weight: bold;
+}

@@ -12,11 +12,12 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  Label
+  Label,
 } from "reactstrap";
 import DateInput from "./DateInput";
 import TimeInput from "./TimeInput";
 import { useEffect, useState } from "react";
+import data from "../../bossData.json";
 const { ipcRenderer } = window.require("electron");
 
 const SettingsForm = ({
@@ -112,8 +113,29 @@ const SettingsForm = ({
       const bossNames = await ipcRenderer.invoke("getBossNames", {
         selectedFolder,
       });
-      setAllPossibleFolders(bossNames);
-      setFoldersToUse(bossNames);
+
+      const bossData = data.map((category) => {
+        const bosses = category.bosses.filter((boss) => {
+          const idx = bossNames.indexOf(boss);
+          if (idx == -1) return false;
+
+          bossNames.splice(idx, 1);
+          return true;
+        });
+
+        return { ...category, bosses };
+      });
+
+      if (bossNames.length) {
+        bossData.push({
+          id: "other",
+          label: "Uncategorised",
+          bosses: bossNames,
+        });
+      }
+
+      setAllPossibleFolders(bossData);
+      setFoldersToUse(bossData.map((b) => b.bosses).flat());
     } catch (err) {
       console.error(err);
     }
@@ -216,32 +238,72 @@ const SettingsForm = ({
           </Col>
         </Row>
       </Form>
-      <Modal isOpen={foldersModal} toggle={() => setFoldersModal(!foldersModal)}>
-        <ModalHeader toggle={() => setFoldersModal(!foldersModal)}>Select Folders</ModalHeader>
+      <Modal
+        isOpen={foldersModal}
+        toggle={() => setFoldersModal(!foldersModal)}
+      >
+        <ModalHeader toggle={() => setFoldersModal(!foldersModal)}>
+          Select Folders
+        </ModalHeader>
         <ModalBody>
           <h5>Please select which folders you wish to include:</h5>
-          <a href="#" onClick={() => setFoldersToUse(allPossibleFolders)}>Select all</a> /{" "}
-          <a href="#" onClick={() => setFoldersToUse([])}>Select none</a>
+          <a
+            href="#"
+            onClick={() =>
+              setFoldersToUse(allPossibleFolders.map((b) => b.bosses).flat())
+            }
+          >
+            Select all
+          </a>{" "}
+          /{" "}
+          <a href="#" onClick={() => setFoldersToUse([])}>
+            Select none
+          </a>
           <Form className="modal-select-form">
-          {
-            allPossibleFolders.map((folder) => (
-              <FormGroup check key={folder}>
-                <Label check>
-                  <Input type="checkbox" 
-                    checked={foldersToUse.includes(folder)} 
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        setFoldersToUse([...foldersToUse, folder])
-                      } else {
-                        setFoldersToUse(foldersToUse.filter(f => f !== folder))
-                      }
-                    }}
-                  />
-                    {' '}{folder}
-                </Label>
-              </FormGroup>
-            ))
-          }
+            {allPossibleFolders.map((category) => (
+              <>
+                <span className="category-label">{category.label}</span>
+                <a
+                  href="#"
+                  onClick={() =>
+                    setFoldersToUse([...foldersToUse, ...category.bosses])
+                  }
+                >
+                  +
+                </a>{" "}
+                /{" "}
+                <a
+                  href="#"
+                  onClick={() =>
+                    setFoldersToUse(
+                      foldersToUse.filter((b) => !category.bosses.includes(b))
+                    )
+                  }
+                >
+                  -
+                </a>
+                {category.bosses.map((boss) => (
+                  <FormGroup check key={category.id}>
+                    <Label check>
+                      <Input
+                        type="checkbox"
+                        checked={foldersToUse.includes(boss)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            setFoldersToUse([...foldersToUse, boss]);
+                          } else {
+                            setFoldersToUse(
+                              foldersToUse.filter((f) => f !== boss)
+                            );
+                          }
+                        }}
+                      />{" "}
+                      {boss}
+                    </Label>
+                  </FormGroup>
+                ))}
+              </>
+            ))}
           </Form>
         </ModalBody>
       </Modal>

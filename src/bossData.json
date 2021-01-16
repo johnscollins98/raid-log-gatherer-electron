@@ -1,0 +1,109 @@
+[
+  {
+    "id": "w1",
+    "label": "Spirit Vale",
+    "bosses": [
+      "Vale Guardian",
+      "Gorseval the Multifarious",
+      "Sabetha the Saboteur"
+    ]
+  },
+  {
+    "id": "w2",
+    "label": "Salvation Pass",
+    "bosses": [
+      "Slothasor",
+      "Berg",
+      "Matthias Gabrel"
+    ]
+  },
+  {
+    "id": "w3",
+    "label": "Stronghold of the Faithful",
+    "bosses": [
+      "Keep Construct",
+      "Haunting Statue",
+      "Xera"
+    ]
+  },
+  {
+    "id": "w4",
+    "label": "Bastion of the Penitent",
+    "bosses": [
+      "Cairn the Indomitable",
+      "Mursaat Overseer",
+      "Samarog",
+      "Deimos"
+    ] 
+  },
+  {
+    "id": "w5",
+    "label": "Hall of Chains",
+    "bosses": [
+      "Soulless Horror",
+      "Desmina",
+      "Broken King",
+      "Eye of Fate",
+      "Eye of Judgment",
+      "Eater of Souls",
+      "Dhuum"
+    ]
+  },
+  {
+    "id": "w6",
+    "label": "Mythwright Gabmit",
+    "bosses": [
+      "Conjured Amalgamate",
+      "Nikare",
+      "Kenut",
+      "Qadim"
+    ]
+  },
+  {
+    "id": "w7",
+    "label": "The Key of Adashim",
+    "bosses": [
+      "Cardinal Adina",
+      "Cardinal Sabir",
+      "Qadim the Peerless"
+    ]
+  },
+  {
+    "id": "strikes",
+    "label": "Strikes",
+    "bosses": [
+      "Icebrood Construct",
+      "Fraenir of Jormag",
+      "Voice of the Fallen",
+      "Whisper of Jormag",
+      "Boneskinner"
+    ]
+  },
+  {
+    "id": "nightmare",
+    "label": "Nightmare CM",
+    "bosses": [
+      "MAMA",
+      "Nightmare Oratuss",
+      "Ensolyss of the Endless Torment"
+    ]
+  },
+  {
+    "id": "shattered",
+    "label": "Shattered Observatory CM",
+    "bosses": [
+      "Skorvald the Shattered",
+      "Artsariiv",
+      "Arkk"
+    ]
+  },
+  {
+    "id": "golem",
+    "label": "DPS Golem",
+    "bosses": [
+      "Standard Kitty Golem",
+      "Medium Kitty Golem",
+      "Large Kitty Golem"
+    ]
+  }
+]
