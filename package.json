@@ -1,6 +1,6 @@
 {
   "name": "raid-log-gatherer",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": true,
   "description": "Tool for gathering GW2 raid logs",
   "author": "John Collins",
@@ -9,8 +9,16 @@
   "build": {
     "productName": "Raid Log Gatherer",
     "win": {
-      "icon":"public/icon.png",
+      "target": ["nsis"],
+      "icon":"public/icon.ico",
       "publish": ["github"]
+    },
+    "nsis": {
+      "installerIcon": "public/icon.ico",
+      "uninstallerIcon": "public/icon.ico",
+      "uninstallDisplayName": "Raid Log Gatherer",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
     }
   },
   "dependencies": {

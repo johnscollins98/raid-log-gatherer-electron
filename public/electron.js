@@ -19,7 +19,7 @@ function createWindow() {
       nodeIntegration: true,
       enableRemoteModule: true,
     },
-    icon: __dirname + "/icon.png",
+    icon: __dirname + "/icon.ico",
   });
 
   if (!isDev) {
